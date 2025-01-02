@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>m3u8d</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    input[type="text"], input[type="number"] {
+      width: 100%;
+      padding: 8px;
+      box-sizing: border-box;
+    }
+    .progress-container {
+      margin: 20px 0;
+    }
+    .button-group {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    button {
+      padding: 8px 16px;
+      cursor: pointer;
+    }
+    .advanced-options {
+      margin-top: 20px;
+      border-top: 1px solid #ddd;
+      padding-top: 20px;
+    }
+    .advanced-options h3 {
+      margin-top: 0;
+    }
+    .checkbox-group {
+      margin: 10px 0;
+    }
+    .checkbox-group label {
+      display: inline-block;
+      margin-left: 5px;
+    }
+    .status-bar {
+      margin-top: 20px;
+      padding: 10px;
+      background: #f5f5f5;
+      border-top: 1px solid #ddd;
+    }
+    .input-group {
+      display: flex;
+      gap: 10px;
+    }
+    .input-group input {
+      flex: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>m3u8 Downloader</h1>
+    
+    <!-- Main Download Form -->
+    <div class="form-group">
+      <label for="m3u8-url">M3U8 URL:</label>
+      <input type="text" id="m3u8-url" placeholder="Enter m3u8 URL">
+    </div>
+    
+    <div class="form-group">
+      <label for="save-dir">Save Directory:</label>
+      <div class="input-group">
+        <input type="text" id="save-dir" placeholder="Select save directory">
+        <button id="browse-dir">Browse</button>
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <label for="file-name">File Name:</label>
+      <input type="text" id="file-name" placeholder="Enter output file name">
+    </div>
+
+    <div class="form-group">
+      <label for="skip-ts">Skip TS Expression:</label>
+      <input type="text" id="skip-ts" placeholder="e.g., 1,92-100,http.code=403">
+    </div>
+
+    <div class="form-group">
+      <label for="temp-dir">Temporary Directory:</label>
+      <div class="input-group">
+        <input type="text" id="temp-dir" placeholder="Select temporary directory">
+        <button id="browse-temp-dir">Browse</button>
+      </div>
+    </div>
+
+    <!-- Progress Indicator -->
+    <div class="progress-container">
+      <progress id="download-progress" value="0" max="100"></progress>
+      <div id="progress-text">0%</div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="button-group">
+      <button id="start-download">Start Download</button>
+      <button id="stop-download" disabled>Stop Download</button>
+      <button id="merge-ts">Merge TS</button>
+    </div>
+
+    <!-- Advanced Options -->
+    <div class="advanced-options">
+      <h3>Advanced Options</h3>
+      
+      <div class="form-group">
+        <label for="thread-count">Thread Count:</label>
+        <input type="number" id="thread-count" value="8" min="1" max="100">
+      </div>
+      
+      <div class="form-group">
+        <label for="proxy">Proxy:</label>
+        <input type="text" id="proxy" placeholder="Enter proxy (e.g., http://127.0.0.1:8080)">
+      </div>
+      
+      <div class="checkbox-group">
+        <input type="checkbox" id="insecure">
+        <label for="insecure">Allow insecure HTTPS requests</label>
+      </div>
+
+      <div class="checkbox-group">
+        <input type="checkbox" id="skip-remove-ts">
+        <label for="skip-remove-ts">Don't delete downloaded TS files</label>
+      </div>
+
+      <div class="checkbox-group">
+        <input type="checkbox" id="skip-merge">
+        <label for="skip-merge">Don't merge TS files</label>
+      </div>
+
+      <div class="checkbox-group">
+        <input type="checkbox" id="debug-log">
+        <label for="debug-log">Enable debug logging</label>
+      </div>
+
+      <div class="checkbox-group">
+        <input type="checkbox" id="use-server-time">
+        <label for="use-server-time">Use server-side file time</label>
+      </div>
+    </div>
+
+    <!-- Status Bar -->
+    <div class="status-bar" id="status-bar">
+      Ready
+    </div>
+  </div>
+
+  <script src="renderer.js"></script>
+</body>
+</html>
